@@ -1,0 +1,46 @@
+entity User {
+    firstName String,
+    lastName String,
+    email String,
+    password String,
+    phoneNumber String,
+    image ImageBlob,
+    role Role
+}
+entity Driver {
+    plateNumber String
+}
+entity Client {
+    phoneNumber String,
+    country String,
+    city String,
+    streetAddress String,
+    zipCode String,
+    isActive Boolean
+}
+entity Order {
+    generatedCode Long
+    title String,
+    description String,
+    createdAt LocalDate,
+    shippedAt LocalDate,
+    recievedAt LocalDate
+    status Status
+    isActive Boolean
+}
+enum Status {
+    OPENED, IN_PROGRESS, CLOSED
+}
+enum Role {
+    ADMIN, DRIVER, CLIENT
+}
+relationship OneToOne {
+    Driver{user} to User,
+    Client{user} to User
+}
+relationship OneToMany {
+    Driver{orders} to Order{driver},
+    Client{orders} to Order{client}
+}
+dto * with mapstruct
+service all with serviceImpl
